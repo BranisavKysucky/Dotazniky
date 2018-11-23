@@ -5,9 +5,11 @@
 {% block body %}
 
     <style>
+
         .row.no-gutter {
             margin-left: 0;
             margin-right: 0;
+
         }
         .row.no-gutter [class*='col-']:not(:first-child),
         .row.no-gutter [class*='col-']:not(:last-child) {
@@ -17,20 +19,60 @@
         .row > div {
             background: #ffffff;
             /*border: 1px solid;*/
+
+
+        }
+
+        #home-container {
+            border: 1px solid #d2d2d2;
+            border-radius: 2rem;
+            padding: 2rem;
+            margin-top: 1rem;
+            margin-bottom: 1rem;
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        }
+
+        #home-submit-btn:hover {
+            background-color: aqua;
         }
 
         .row {
-            border: 1px solid;
+            /*border: 1px solid;*/
         }
+
+
+        /*.form-control[disabled] {*/
+        /*ak je vypnuta textarea tak vyfarbi na cerveno, important znamena ze ma najvacsiu prioritu*/
+        /*background-color: red !important;*/
+        /*}*/
+
+        textarea {
+            font-size: .8rem;
+
+        }
+        textarea {
+            padding: 10px;
+            line-height: 1.5;
+            /*border-radius: 5px;*/
+            /*border: 1px solid #ccc;*/
+            /*box-shadow: 1px 1px 1px #999;*/
+            background: white;
+            width: 500px;
+            height: 50px;
+
+            resize: none;
+        }
+
+
 
     </style>
 
 <form method="post">
-        <div class="container">
+        <div id="home-container" class="container">
             <div class="row">
                 <div class="col-md-6">
                     <label for="exampleInputEmail1">Vybrat zamestnanca :</label>
-                     <select name="zamestnanec" title="Zamestnanec" id="zamestnanec">
+                     <select class="form-control" name="zamestnanec" title="Zamestnanec" id="zamestnanec">
                     <option selected></option>
                     {% for z in zamestnanec %}
                         <option value="{{ z.id }}">{{ z.meno }}</option>
@@ -40,16 +82,18 @@
 
                    <div class="col-md-6">
                     <label for="exampleInputEmail1">Typ formulara :</label>
-                      <select name="typZobrazenia">
+                      <select name="typZobrazenia" class="form-control">
                     <option value="" selected></option>
                     <option value="tyzdenny">Tyzdenny</option>
                     <option value="mesacny">Mesacny</option>
                 </select>
                 </div>
+            </div>
+            <br>
 
 
                 <div class="col-md-12">
-                    <button type="submit">Spusti</button>
+                    <button id="home-submit-btn" class="btn btn-success" type="submit">Potvrdiť výber</button>
                 </div>
         </div>
             </div>

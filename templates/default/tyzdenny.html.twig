@@ -5,9 +5,14 @@
 {% block body %}
 
     <style>
+
+
+
+
         .row.no-gutter {
             margin-left: 0;
             margin-right: 0;
+
         }
         .row.no-gutter [class*='col-']:not(:first-child),
         .row.no-gutter [class*='col-']:not(:last-child) {
@@ -17,22 +22,56 @@
         .row > div {
             background: #ffffff;
             /*border: 1px solid;*/
+
+
+        }
+
+        #tyzdenny-cantainer {
+            border: 1px solid #d2d2d2;
+            border-radius: 2rem;
+            padding: 2rem;
+            margin-top: 1rem;
+            margin-bottom: 1rem;
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        }
+
+        #tyzdenny-submit-btn:hover {
+            background-color: aqua;
         }
 
         .row {
-            border: 1px solid;
-
-
-
+            /*border: 1px solid;*/
         }
 
+
+        /*.form-control[disabled] {*/
+        /*ak je vypnuta textarea tak vyfarbi na cerveno, important znamena ze ma najvacsiu prioritu*/
+        /*background-color: red !important;*/
+        /*}*/
+
+        textarea {
+            font-size: .8rem;
+
+        }
+        textarea {
+            padding: 10px;
+            line-height: 1.5;
+            /*border-radius: 5px;*/
+            /*border: 1px solid #ccc;*/
+            /*box-shadow: 1px 1px 1px #999;*/
+            background: white;
+            width: 500px;
+            height: 50px;
+
+            resize: none;
+        }
 
 
 
     </style>
 
     <form id="tyzdenny-form">
-        <div class="container">
+        <div id="tyzdenny-cantainer" class="container">
             <div class="row">
                 <div class="col-md-4">
                     <label for="exampleInputEmail1">Meno zamestnanca :</label>
@@ -67,77 +106,121 @@
                     </div>
                 </div>
 
-
-                        <div class="row">
-                            <div class="col-md-12">
-                                <label for="exampleInputEmail1"> 1. Ako ste boli spokojný s náboroým procesom ?</label>
-                                <br>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label for="exampleInputEmail1"> 1. Ako ste boli spokojný s náboroým procesom ?</label>
+                            <div class="row">
+                            <div class="col-md-4">
                                 <input type="radio" name="otazka1_checkbox" data-otazka="1" value="Spokojný"  disabled {{ zamestnanec.tyzdennyZaznam.otazka1Checkbox == 'Spokojný' ? 'checked' : '' }} > Spokojný
                                 <br>
                                 <input type="radio" name="otazka1_checkbox" data-otazka="1"  value="Nespokojný" disabled {{ zamestnanec.tyzdennyZaznam.otazka1Checkbox == 'Nespokojný' ? 'checked' : '' }} > Nespokojný
-                             <br>
-                                <textarea id="textarea" name="otazka1_komentar" cols="" rows="" disabled >{{ zamestnanec.tyzdennyZaznam.otazka1Komentar }} </textarea>
                             </div>
+                            <div class="col-md-8">
+                                {% if zamestnanec.tyzdennyZaznam.otazka1Komentar is null %}
+                                    <textarea id="textarea" class="form-control" name="otazka1_komentar" cols="" rows="" placeholder="Komentár, návrhy, postrehy:"></textarea>
+                                {% else %}
+                                    <textarea id="textarea" class="form-control" name="otazka1_komentar" cols="" rows="" disabled style="background-color: white;" >{{ zamestnanec.tyzdennyZaznam.otazka1Komentar }}</textarea>
+                                {% endif %}
+                                </div>
+                              </div>
+                          </div>
                         </div>
+                    <br>
+
 
                     <div class="row">
                         <div class="col-md-12">
                             <label for="exampleInputEmail1"> 2. Vnímate rozdiel medzi informáciami, ktoré ste dostali pri nábore s realitou na prevádzke?</label>
-                            <br>
+                            <div class="row">
+                                <div class="col-md-4">
                             <input type="radio" name="otazka2_checkbox" data-otazka="2" value="Nie, informácie sú rovnaké" disabled {{ zamestnanec.tyzdennyZaznam.otazka2Checkbox == 'Nie, informácie sú rovnaké' ? 'checked' : '' }}  > Nie, informácie sú rovnaké
                             <br>
                             <input type="radio" name="otazka2_checkbox" data-otazka="2" value="Áno, vnímam menšie rozdiely - uviesť v komentári aké"  disabled {{ zamestnanec.tyzdennyZaznam.otazka2Checkbox == 'Áno, vnímam menšie rozdiely - uviesť v komentári aké' ? 'checked' : '' }}  > Áno, vnímam menšie rozdiely - uviesť v komentári aké
                             <br>
                             <input type="radio" name="otazka2_komentar" data-otazka="2" value="Realita je úplne  iná - uviesť v komentári rozdiely" disabled {{ zamestnanec.tyzdennyZaznam.otazka2Checkbox == 'Realita je úplne  iná - uviesť v komentári rozdiely' ? 'checked' : '' }}  > Realita je úplne  iná - uviesť v komentári rozdiely
-                            <br>
-                            <textarea id="textarea" name="otazka2_komentar" cols="" rows="" disabled  >{{ zamestnanec.tyzdennyZaznam.otazka2Komentar }} </textarea>
+                                </div>
+                                <div class="col-md-8">
+                                    {% if zamestnanec.tyzdennyZaznam.otazka2Komentar is null %}
+                                        <textarea id="textarea" class="form-control" name="otazka2_komentar" cols="" rows="" placeholder="Komentár, návrhy, postrehy:"></textarea>
+                                    {% else %}
+                                        <textarea id="textarea" class="form-control" name="otazka2_komentar" cols="" rows="" disabled style="background-color: white;" >{{ zamestnanec.tyzdennyZaznam.otazka2Komentar }}</textarea>
+                                    {% endif %}
+                                </div>
+                            </div>
                         </div>
                     </div>
-
+                    <br>
 
                     <div class="row">
                         <div class="col-md-12">
                             <label for="exampleInputEmail1">3. Ako ste boli  spokojný s priebehom školenia v AFM?</label>
-                            <br>
+                            <div class="row">
+                                <div class="col-md-4">
                             <input type="radio" name="otazka3_checkbox"  data-otazka="3" value="Spokojný/á" disabled {{ zamestnanec.tyzdennyZaznam.otazka3Checkbox == 'Spokojný/á' ? 'checked' : '' }}  > Spokojný/á
                             <br>
                             <input type="radio" name="otazka3_checkbox" data-otazka="3"  value="Nespokojný/á (uviesť dôvod)" disabled {{ zamestnanec.tyzdennyZaznam.otazka3Checkbox == 'Nespokojný/á (uviesť dôvod)' ? 'checked' : '' }}  > Nespokojný/á (uviesť dôvod)
                             <br>
                             <input type="radio" name="otazka3_checkbox" data-otazka="3" value="Sans objet" disabled {{ zamestnanec.tyzdennyZaznam.otazka3Checkbox == 'Sans objet' ? 'checked' : '' }} > Sans objet
-                            <br>
-                            <textarea id="textarea" name="otazka3_komentar" cols="" rows="" disabled >{{ zamestnanec.tyzdennyZaznam.otazka3Komentar }}</textarea>
+                                </div>
+                                <div class="col-md-8">
+                                    {% if zamestnanec.tyzdennyZaznam.otazka3Komentar is null %}
+                                        <textarea id="textarea" class="form-control" name="otazka3_komentar" cols="" rows="" placeholder="Komentár, návrhy, postrehy:"></textarea>
+                                    {% else %}
+                                        <textarea id="textarea" class="form-control" name="otazka3_komentar" cols="" rows="" disabled style="background-color: white;" >{{ zamestnanec.tyzdennyZaznam.otazka3Komentar }}</textarea>
+                                    {% endif %}
+                                </div>
+                            </div>
                         </div>
                     </div>
+                    <br>
+
 
                     <div class="row">
                         <div class="col-md-12">
                             <label for="exampleInputEmail1">4. Ako hodnotíte zaškolenie na post v ZVT (boli ste školený podľa metódy JIT)?</label>
-                            <br>
+                            <div class="row">
+                                <div class="col-md-4">
                             <input type="radio" name="otazka4_checkbox" data-otazka="4" value="Spokojný/á" disabled {{ zamestnanec.tyzdennyZaznam.otazka4Checkbox == 'Spokojný/á' ? 'checked' : '' }} > Spokojný/á
                             <br>
                             <input type="radio" name="otazka4_checkbox" data-otazka="4" value="Nespokojný/á (uviesť dôvod)" disabled {{ zamestnanec.tyzdennyZaznam.otazka4Checkbox == 'Nespokojný/á (uviesť dôvod)' ? 'checked' : '' }} > Nespokojný/á (uviesť dôvod)
-                            <br>
-                            <textarea id="textarea" name="otazka4_komentar" cols="" rows=""  disabled >{{ zamestnanec.tyzdennyZaznam.otazka4Komentar }}</textarea>
-                        </div>
+                                </div>
+                                    <div class="col-md-8">
+                                        {% if zamestnanec.tyzdennyZaznam.otazka4Komentar is null %}
+                                            <textarea id="textarea" class="form-control" name="otazka4_komentar" cols="" rows="" placeholder="Komentár, návrhy, postrehy:"></textarea>
+                                        {% else %}
+                                            <textarea id="textarea" class="form-control" name="otazka4_komentar" cols="" rows="" disabled style="background-color: white;" >{{ zamestnanec.tyzdennyZaznam.otazka4Komentar }}</textarea>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
                     </div>
 
                     <div class="row">
                         <div class="col-md-12">
                             <label for="exampleInputEmail1">5. Bol čas školenia na prvý post pre Vás postačujúci?</label>
-                            <br>
+                            <div class="row">
+                                <div class="col-md-4">
                             <input type="radio" name="otazka5_checkbox" data-otazka="5" value="ÁNO" disabled {{ zamestnanec.tyzdennyZaznam.otazka5Checkbox == 'ÁNO' ? 'checked' : '' }}  > ÁNO
                             <br>
                             <input type="radio" name="otazka5_checkbox" data-otazka="5" value="NIE (uviesť čas a dôvod)" disabled {{ zamestnanec.tyzdennyZaznam.otazka4Checkbox == 'NIE (uviesť čas a dôvod)' ? 'checked' : '' }}  > NIE (uviesť čas a dôvod)
-                            <br>
-                            <textarea id="textarea" name="otazka5_komentar" cols="" rows="" disabled >{{ zamestnanec.tyzdennyZaznam.otazka5Komentar }}</textarea>
+                                </div>
+                            <div class="col-md-8">
+                                {% if zamestnanec.tyzdennyZaznam.otazka5Komentar is null %}
+                                    <textarea id="textarea" class="form-control" name="otazka5_komentar" cols="" rows="" placeholder="Komentár, návrhy, postrehy:"></textarea>
+                                {% else %}
+                                    <textarea id="textarea" class="form-control" name="otazka5_komentar" cols="" rows="" disabled style="background-color: white;" >{{ zamestnanec.tyzdennyZaznam.otazka5Komentar }}</textarea>
+                                {% endif %}
+                            </div>
                         </div>
+                     </div>
                     </div>
-
+                    <br>
 
                     <div class="row">
                         <div class="col-md-12">
                             <label for="exampleInputEmail1">6. Ako Vás prijal kolektív spolupracovníkov ?</label>
-                            <br>
+                            <div class="row">
+                                <div class="col-md-4">
                             <input type="radio" name="otazka6_checkbox" data-otazka="6" value="Priateľsky" disabled {{ zamestnanec.tyzdennyZaznam.otazka6Checkbox == 'Priateľsky' ? 'checked' : '' }} > Priateľsky
                             <br>
                             <input type="radio" name="otazka6_checkbox"  data-otazka="6" value="Neutrálne" disabled {{ zamestnanec.tyzdennyZaznam.otazka6Checkbox == 'Neutrálne' ? 'checked' : '' }}> Neutrálne
@@ -145,51 +228,84 @@
                             <input type="radio" name="otazka6_checkbox" data-otazka="6" value="Nie príliš priateľsky" disabled {{ zamestnanec.tyzdennyZaznam.otazka6Checkbox == 'Nie príliš priateľsky' ? 'checked' : '' }}> Nie príliš priateľsky
                             <br>
                             <input type="radio" name="otazka6_checkbox" data-otazka="6" value="Nepriateľsky" disabled {{ zamestnanec.tyzdennyZaznam.otazka6Checkbox == 'Nepriateľsky' ? 'checked' : '' }}> Nepriateľsky
-                            <br>
-                            <textarea id="textarea" name="otazka6_komentar" cols="" rows="" disabled >{{ zamestnanec.tyzdennyZaznam.otazka6Komentar }}</textarea>
+                                </div>
+                                <div class="col-md-8">
+                                    {% if zamestnanec.tyzdennyZaznam.otazka6Komentar is null %}
+                                        <textarea id="textarea" class="form-control" name="otazka6_komentar" cols="" rows="" placeholder="Komentár, návrhy, postrehy:"></textarea>
+                                    {% else %}
+                                        <textarea id="textarea" class="form-control" name="otazka6_komentar" cols="" rows="" disabled style="background-color: white;" >{{ zamestnanec.tyzdennyZaznam.otazka6Komentar }}</textarea>
+                                    {% endif %}
+                                </div>
+                            </div>
                         </div>
                     </div>
+                    <br>
 
 
                     <div class="row">
                         <div class="col-md-12">
                             <label for="exampleInputEmail1">7. Ako hodnotíte zaškoľovanie a prístup svojho monitora?</label>
-                            <br>
+                            <div class="row">
+                                <div class="col-md-4">
                             <input type="radio" name="otazka7_checkbox" data-otazka="7" value="Som spokojný" disabled {{ zamestnanec.tyzdennyZaznam.otazka6Checkbox == 'Som spokojný' ? 'checked' : '' }}> Som spokojný
                             <br>
                             <input type="radio" name="otazka7_checkbox" data-otazka="7" value="Som nespokojný" disabled {{ zamestnanec.tyzdennyZaznam.otazka6Checkbox == 'Som nespokojný' ? 'checked' : '' }} > Som nespokojný
-                            <br>
-                            <textarea id="textarea" name="otazka7_komentar" cols="" rows=""  disabled >{{ zamestnanec.tyzdennyZaznam.otazka6Komentar }}</textarea>
+                                </div>
+                                <div class="col-md-8">
+                                    {% if zamestnanec.tyzdennyZaznam.otazka7Komentar is null %}
+                                        <textarea id="textarea" class="form-control" name="otazka7_komentar" cols="" rows="" placeholder="Komentár, návrhy, postrehy:"></textarea>
+                                    {% else %}
+                                        <textarea id="textarea" class="form-control" name="otazka7_komentar" cols="" rows="" disabled style="background-color: white;" >{{ zamestnanec.tyzdennyZaznam.otazka7Komentar }}</textarea>
+                                    {% endif %}
+                                </div>
+                            </div>
                         </div>
                     </div>
-
+                    <br>
 
                     <div class="row">
                         <div class="col-md-12">
                             <label for="exampleInputEmail1">8. Ako ste spokojný s ubytovaním?</label>
-                            <br>
+                            <div class="row">
+                                <div class="col-md-4">
                             <input type="radio" name="otazka8_checkbox" data-otazka="8" value="Som spokojný"  disabled {{ zamestnanec.tyzdennyZaznam.otazka8Checkbox == 'Som nespokojný' ? 'checked' : '' }}> Som spokojný
                             <br>
                             <input type="radio" name="otazka8_checkbox" data-otazka="8" value="Som nespokojný" disabled {{ zamestnanec.tyzdennyZaznam.otazka8Checkbox == 'Som nespokojný' ? 'checked' : '' }}> Som nespokojný
                             <br>
                             <input type="radio" name="otazka8_checkbox" data-otazka="8" value="Mám vlastné ubytovanie" disabled {{ zamestnanec.tyzdennyZaznam.otazka8Checkbox == 'Mám vlastné ubytovanie' ? 'checked' : '' }}> Mám vlastné ubytovanie
-                            <br>
-                            <textarea id="textarea" name="otazka8_komentar" cols="" rows=""  disabled >{{ zamestnanec.tyzdennyZaznam.otazka6Komentar }}</textarea>
+                                </div>
+                                <div class="col-md-8">
+                                    {% if zamestnanec.tyzdennyZaznam.otazka8Komentar is null %}
+                                        <textarea id="textarea" class="form-control" name="otazka8_komentar" cols="" rows="" placeholder="Komentár, návrhy, postrehy:"></textarea>
+                                    {% else %}
+                                        <textarea id="textarea" class="form-control" name="otazka8_komentar" cols="" rows="" disabled style="background-color: white;" >{{ zamestnanec.tyzdennyZaznam.otazka8Komentar }}</textarea>
+                                    {% endif %}
+                                </div>
+                            </div>
                         </div>
                     </div>
-
+                    <br>
 
                     <div class="row">
                         <div class="col-md-12">
                             <label for="exampleInputEmail1">9. Návrhy na zlepšenie, prípadne uviesť čo Vám chýbalo počas zaškoľovania</label>
-                            <br>
-                            <textarea id="textarea" name="otazka9_komentar" cols="" rows="" disabled >{{ zamestnanec.tyzdennyZaznam.otazka9Komentar }}</textarea>
+                            <div class="row">
+                                <div class="col-md-4">
+                                </div>
+                                <div class="col-md-8">
+                                    {% if zamestnanec.tyzdennyZaznam.otazka9Komentar is null %}
+                                        <textarea id="textarea" class="form-control" name="otazka9_komentar" cols="" rows="" placeholder="Komentár, návrhy, postrehy:"></textarea>
+                                    {% else %}
+                                        <textarea id="textarea" class="form-control" name="otazka9_komentar" cols="" rows="" disabled style="background-color: white;" >{{ zamestnanec.tyzdennyZaznam.otazka9Komentar }}</textarea>
+                                    {% endif %}
+                                </div>
+                    </div>
                         </div>
                     </div>
 
                     <div class="row">
                         <div class="col-md-12">
-                            <button type="submit">Potvrď</button>
+                            <button id="tyzdenny-submit-btn" class="btn btn-success" type="submit">Potvrď</button>
                         </div>
                     </div>
 
