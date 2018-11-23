@@ -1,0 +1,268 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}dotaznik - mesacny{% endblock %}
+
+{% block body %}
+
+    <style>
+
+        html, body {
+            height: 100%;
+            margin: 0; padding: 0;
+            font-size:100%;
+        }
+        body {
+            background:black;/*#F2F5FB;*/
+            font-family: 'Open Sans', sans-serif;
+            font-size:14px;
+        }
+
+
+        .row.no-gutter {
+            margin-left: 0;
+            margin-right: 0;
+
+        }
+        .row.no-gutter [class*='col-']:not(:first-child),
+        .row.no-gutter [class*='col-']:not(:last-child) {
+            padding-right: 0;
+            padding-left: 0;
+        }
+        .row > div {
+            background: #ffffff;
+            /*border: 1px solid;*/
+
+
+        }
+
+#mesacny-container {
+    border: 1px solid #d2d2d2;
+    border-radius: 2rem;
+    padding: 2rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+#mesacny-submit-btn:hover {
+    background-color: aqua;
+}
+
+        .row {
+            /*border: 1px solid;*/
+        }
+
+
+        /*.form-control[disabled] {*/
+        /*ak je vypnuta textarea tak vyfarbi na cerveno, important znamena ze ma najvacsiu prioritu*/
+            /*background-color: red !important;*/
+        /*}*/
+
+        textarea {
+            font-size: .8rem;
+
+        }
+        textarea {
+            padding: 10px;
+            line-height: 1.5;
+            /*border-radius: 5px;*/
+            /*border: 1px solid #ccc;*/
+            /*box-shadow: 1px 1px 1px #999;*/
+            background: white;
+            width: 500px;
+            height: 50px;
+
+            resize: none;
+        }
+
+
+
+    </style>
+    <form id="mesacny-form">
+        <div id="mesacny-container" class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <label for="exampleInputEmail1">Meno zamestnanca :</label>
+                    <label class="form-control form-control" name="meno"   for="exampleInputEmail1">{{ zamestnanec.meno }}</label>
+                </div>
+
+                <div class="col-md-4">
+                </div>
+
+                <div class="col-md-4">
+                    <label for="exampleInputEmail1">Dátum nástupu :</label>
+
+                    <label class="form-control form-control"   for="exampleInputEmail1"> {{ zamestnanec.DatumNastupu|date("d.m.Y") }}
+                    </label>
+                </div>
+
+
+
+                <div class="col-md-4">
+                    <label for="exampleInputEmail1">Meno RU :</label>
+                    <label class="form-control form-control"   for="exampleInputEmail1">{{ zamestnanec.nadriadeny.meno }} </label>
+                </div>
+
+                <div class="col-md-4">
+                </div>
+
+                <div class="col-md-4">
+                    <label for="exampleInputEmail1">Zmluva :</label>
+                    <label class="form-control form-control"   for="exampleInputEmail1"> {{ zamestnanec.TypZmluvy }}  </label>
+                </div>
+
+
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <center> <b>Dotazník spokojnosti zamestnanca po 1. mesiaci v práci</b> </center>
+                        </div>
+                    </div>
+
+
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label for="exampleInputEmail1">1. Ste spokojný/á s atmosférou vo vašom kolektíve,v ktorom pracujete?</label>
+
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <input type="radio" name="otazka1_checkbox" data-otazka="1" value="Áno" disabled {{ zamestnanec.mesacnyZaznam.otazka1Checkbox == 'Áno' ? 'checked' : '' }}> Áno
+                                    <br>
+                                    <input type="radio" name="otazka1_checkbox" data-otazka="1" value="Nie (uviesť dôvod)"  disabled {{ zamestnanec.mesacnyZaznam.otazka1Checkbox == 'Nie (uviesť dôvod)' ? 'checked' : '' }}> Nie (uviesť dôvod)
+                                </div>
+                                <div class="col-md-8">
+                                    {% if zamestnanec.mesacnyZaznam.otazka1Komentar is null %}
+                                        <textarea id="textarea" class="form-control" name="otazka1_komentar" cols="" rows="" placeholder="Komentár, návrhy, postrehy:"></textarea>
+                                    {% else %}
+                                        <textarea id="textarea" class="form-control" name="otazka1_komentar" cols="" rows="" disabled style="background-color: white;" >{{ zamestnanec.mesacnyZaznam.otazka1Komentar }}</textarea>
+                                        {# toto ak by som chcel si zobrazit farbu textu: <textarea id="textarea" class="form-control" name="otazka1_komentar" cols="" rows="" disabled style="background-color: red;" >{{ zamestnanec.mesacnyZaznam.otazka1Komentar }}</textarea>#}
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label for="exampleInputEmail1">2. Čo Vás v práci najviac motivuje? (zoradiť podľa dôležitosti  od 1 - 3)</label>
+                            <div class="row">
+                        <div class="col-md-4">
+                            <input type="radio" name="otazka2_checkbox" data-otazka="2"  value="Možnosť kariérneho rastu" disabled {{ zamestnanec.mesacnyZaznam.otazka2Checkbox == 'Možnosť kariérneho rastu' ? 'checked' : '' }} > Možnosť kariérneho rastu
+                            <br>
+                            <input type="radio" name="otazka2_checkbox" data-otazka="2"  value="Priateľské prostredie" disabled {{ zamestnanec.mesacnyZaznam.otazka2Checkbox == 'Priateľské prostredie' ? 'checked' : '' }}    >  Priateľské prostredie
+                            <br>
+                            <input type="radio" name="otazka2_checkbox" data-otazka="2"  value="Porozumenia zo strany nadriadených (koordinátor, RU)" disabled {{ zamestnanec.mesacnyZaznam.otazka2Checkbox == 'Porozumenia zo strany nadriadených (koordinátor, RU)' ? 'checked' : '' }} >  Porozumenia zo strany nadriadených (koordinátor, RU)
+                        </div>
+                                <div class="col-md-8">
+                                    {% if zamestnanec.mesacnyZaznam.otazka2Komentar is null %}
+                                        <textarea id="textarea" class="form-control" name="otazka2_komentar" cols="" rows="" placeholder="Komentár, návrhy, postrehy:"></textarea>
+                                    {% else %}
+                                        <textarea id="textarea" class="form-control" name="otazka2_komentar" cols="" rows="" disabled style="background-color: white;" >{{ zamestnanec.mesacnyZaznam.otazka2Komentar }}</textarea>
+                                    {% endif %}
+                                </div>
+                                </div>
+                                </div>
+                                </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label for="exampleInputEmail1">3. Ste stotožnený so svojím pracovným zaradením?</label>
+                            <div class="row">
+                                <div class="col-md-4">
+                            <input type="radio" name="otazka3_checkbox" data-otazka="3"  value="Áno" disabled {{ zamestnanec.mesacnyZaznam.otazka3Checkbox == 'Áno' ? 'checked' : '' }} > Áno
+                            <br>
+                            <input type="radio" name="otazka3_checkbox" data-otazka="3"   value="Nie" disabled {{ zamestnanec.mesacnyZaznam.otazka3Checkbox == 'Nie' ? 'checked' : '' }} >  Nie
+                            </div>
+                            <div class="col-md-8">
+                                {% if zamestnanec.mesacnyZaznam.otazka2Komentar is null %}
+                                    <textarea id="textarea" class="form-control" name="otazka3_komentar" cols="" rows="" placeholder="Komentár, návrhy, postrehy:"></textarea>
+                                {% else %}
+                                    <textarea id="textarea" class="form-control" name="otazka3_komentar" cols="" rows="" disabled style="background-color: white;" >{{ zamestnanec.mesacnyZaznam.otazka3Komentar }}</textarea>
+                                {% endif %}
+                        </div>
+                        </div>
+                        </div>
+                        </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label for="exampleInputEmail1">4. Zaškoľujete sa na viacerých postoch (je rešpektovaná rotácia na poste)?</label>
+                            <div class="row">
+                                <div class="col-md-4">
+                            <br>
+                            <input type="radio" name="otazka4_checkbox" data-otazka="4"  value="Áno" disabled {{ zamestnanec.mesacnyZaznam.otazka4Checkbox == 'Áno' ? 'checked' : '' }}  > Áno
+                            <br>
+                            <input type="radio" name="otazka4_checkbox" data-otazka="4"  value="Nie" disabled {{ zamestnanec.mesacnyZaznam.otazka4Checkbox == 'Nie' ? 'checked' : '' }} >  Nie (uviesť dôvod)
+                            <br>
+                            <textarea id="textarea" name="otazka4_komentar" cols="" rows="" disabled >{{ zamestnanec.mesacnyZaznam.otazka4Komentar }} </textarea>
+                        </div>
+                    </div>
+
+
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label for="exampleInputEmail1">5. Čo Vás najviac prekvapilo v našom závode?</label>
+                            <br>
+                            <textarea id="textarea" name="otazka5_komentar" cols="" rows=""  disabled >{{ zamestnanec.mesacnyZaznam.otazka5Komentar }} </textarea>
+                        </div>
+                    </div>
+
+
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label for="exampleInputEmail1">6. Do akej miery Vaši nadriadení (koordinátor, RU) berú do úvahy Vaše názory a pripomienky?</label>
+                            <br>
+                            <input type="radio" name="otazka6_checkbox" data-otazka="6"  value="Zaoberajú sa nimi"  disabled {{ zamestnanec.mesacnyZaznam.otazka6Checkbox == 'Zaoberajú sa nimi' ? 'checked' : '' }} > Zaoberajú sa nimi
+                            <br>
+                            <input type="radio" name="otazka6_checkbox" data-otazka="6"  value="Riešenie trvá príliš dlho" disabled {{ zamestnanec.mesacnyZaznam.otazka6Checkbox == 'Riešenie trvá príliš dlho' ? 'checked' : '' }}  >  Riešenie trvá príliš dlho
+                            <br>
+                            <input type="radio" name="otazka6_checkbox"  data-otazka="6"  value="Nemám spätnú väzbu" disabled {{ zamestnanec.mesacnyZaznam.otazka6Checkbox == 'Nemám spätnú väzbu' ? 'checked' : '' }} >  Nemám spätnú väzbu
+                            <br>
+                            <input type="radio" name="otazka6_checkbox" data-otazka="6"  value="Vôbec sa nimi nezaoberajú" disabled {{ zamestnanec.mesacnyZaznam.otazka6Checkbox == 'Vôbec sa nimi nezaoberajú' ? 'checked' : '' }}  >  Vôbec sa nimi nezaoberajú
+                            <br>
+                            <textarea id="textarea" name="otazka6_komentar" data-otazka="6"  cols="" rows="" disabled  >  {{ zamestnanec.mesacnyZaznam.otazka6Komentar }}  </textarea>
+                        </div>
+                    </div>
+
+
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label for="exampleInputEmail1">7. Ako dlho chcete pracovať v našom závode?</label>
+                            <br>
+                            <input type="radio" name="otazka7_checkbox" data-otazka="7"  value="Aspoň 1 rok"  disabled {{ zamestnanec.mesacnyZaznam.otazka7Checkbox == 'Aspoň 1 rok' ? 'checked' : '' }} > Aspoň 1 rok
+                            <br>
+                            <input type="radio" name="otazka7_checkbox" data-otazka="7"  value="Minimálne 3 roky" disabled {{ zamestnanec.mesacnyZaznam.otazka7Checkbox == 'Minimálne 3 roky' ? 'checked' : '' }} >  Minimálne 3 roky
+                            <br>
+                            <input type="radio" name="otazka7_checkbox" data-otazka="7"  value="Viac ako 5 rokov" disabled {{ zamestnanec.mesacnyZaznam.otazka7Checkbox == 'Viac ako 5 rokov' ? 'checked' : '' }} >  Viac ako 5 rokov
+                            <br>
+                            <input type="radio" name="otazka7_checkbox" data-otazka="7"  value="Neviem" disabled {{ zamestnanec.mesacnyZaznam.otazka7Checkbox == 'Neviem' ? 'checked' : '' }} >  Neviem
+                            <br>
+                            <input type="radio" name="otazka7_checkbox" value="Uvažujem o odchode" disabled {{ zamestnanec.mesacnyZaznam.otazka7Checkbox == 'Uvažujem o odchode' ? 'checked' : '' }} >  Uvažujem o odchode
+                            <br>
+                            <textarea id="textarea" name="otazka7_komentar" cols="" rows=""  disabled > {{ zamestnanec.mesacnyZaznam.otazka7Komentar }}</textarea>
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <button id="mesacny-submit-btn" class="btn btn-success" type="submit">Potvrď</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </form>
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/app.js') }}"></script>
+{% endblock %}
