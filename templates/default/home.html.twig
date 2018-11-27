@@ -30,6 +30,11 @@
             margin-top: 1rem;
             margin-bottom: 1rem;
             box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+
+        }
+
+        select.form-control:not([size]):not([multiple]) {
+            height: calc(2.25rem + 10px);
         }
 
         #home-submit-btn:hover {
@@ -84,8 +89,8 @@
                     <label for="exampleInputEmail1">Typ formulara :</label>
                       <select name="typZobrazenia" class="form-control">
                     <option value="" selected></option>
-                    <option value="tyzdenny">Tyzdenny</option>
-                    <option value="mesacny">Mesacny</option>
+                    <option value="tyzdenny">Týždenny</option>
+                    <option value="mesacny">Mesačný</option>
                 </select>
                 </div>
             </div>
